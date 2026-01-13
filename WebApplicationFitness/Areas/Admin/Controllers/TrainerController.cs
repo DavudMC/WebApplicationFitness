@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using WebApplicationFitness.Contexts;
@@ -9,6 +10,7 @@ using WebApplicationFitness.ViewModels.TrainerViewModels;
 namespace WebApplicationFitness.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class TrainerController : Controller
     {
         private readonly AppDbContext _context;

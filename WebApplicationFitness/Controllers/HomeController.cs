@@ -1,14 +1,25 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using WebApplicationFitness.Contexts;
+using WebApplicationFitness.ViewModels.TrainerViewModels;
 
 
 namespace WebApplicationFitness.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(AppDbContext _context) : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var trainers = await _context.Trainers.Select(x => new TrainerGetVM()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                ImagePath = x.ImagePath,
+                Profession = x.Profession
+            }).ToListAsync();
+            return View(trainers);
         }
     }
 }
